@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCV Loading & Unloading Module</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://kit.fontawesome.com/a076d05399.js">
+    <link rel="stylesheet" href="6.css">
+    <script src="ga.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="login-form">
+                    <div class="header">
+                        <img src="logo.png" class="logo">
+                    </div>
+                    <form id="loading-form">
+                        <!-- Dropdown for GA Name -->
+                        <div class="form-group">
+                            <style>
+                                #gaName {
+                                    font-size: 12px; /* Adjust this value as needed */
+                                }
+                            </style>
+                            <label for="gaName" class="font-weight-bold">GA Name</label>
+                            <select id="gaName" class="form-control form-control-lg">
+                                <!-- <option value="" selected disabled></option> -->
+                                
+                                <!-- Add more options as needed -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="roCode" class="font-weight-bold">RO Code</label>
+                            <input type="text" id="roCode" class="form-control form-control-lg" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lcvRegNum" class="font-weight-bold">LCV Registration Number</label>
+                            <input type="text" id="lcvRegNum" class="form-control form-control-lg" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date" class="font-weight-bold">Date</label>
+                            <input type="text" id="date" class="form-control form-control-lg" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time" class="font-weight-bold">Time</label>
+                            <input type="text" id="time" class="form-control form-control-lg" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="initialReading" class="font-weight-bold">MFM Initial Reading</label>
+                            <input type="text" id="initialReading" class="form-control form-control-lg" oninput="validateDecimalInput(this)" onblur="formatToThreeDecimals(this)">
+                        </div>
+                        <div class="form-group">
+                            <label for="startMfmReading" class="font-weight-bold">Upload MFM Initial Reading</label>
+                           <center> <input type="file" id="startMfmReading" class="form-control-file"></center>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="finalReading" class="font-weight-bold">MFM Final Reading</label>
+                            <input type="text" id="finalReading" class="form-control form-control-lg" oninput="validateDecimalInput(this)" onblur="formatToThreeDecimals(this)">
+                        </div>
+                        <div class="form-group">
+                            <label for="startMfmReading" class="font-weight-bold">Upload MFM Final Reading</label>
+                           <center> <input type="file" id="endMfmReading" class="form-control-file"></center>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantityLoaded" class="font-weight-bold">Quantity Unloaded</label>
+                            <input type="text" id="quantityLoaded" class="form-control form-control-lg" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" id="submit-btn" class="btn btn-primary btn-lg btn-block">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+    <!-- Scripts -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="9.js"></script>
+    <script>
+        function validateDecimalInput(input) {
+            input.value = input.value.replace(/[^0-9.]/g, '');
+            const parts = input.value.split('.');
+            if (parts.length > 2) {
+                input.value = parts[0] + '.' + parts.slice(1).join('');
+            }
+            if (parts[1] && parts[1].length > 3) {
+                input.value = parts[0] + '.' + parts[1].substring(0, 3);
+            }
+        }
+
+        function formatToThreeDecimals(input) {
+            if (!input.value.includes('.')) {
+                input.value += '.000';
+            } else {
+                const parts = input.value.split('.');
+                if (parts[0] === '') {
+                    parts[0] = '0';
+                }
+                while (parts[1].length < 3) {
+                    parts[1] += '0';
+                }
+                input.value = parts.join('.');
+            }
+        }
+    </script>
+</body>
+</html>

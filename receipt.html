@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Gate Pass & Goods Delivery Challan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {right: 10px;
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #000;
+            position: relative; /* Position relative to allow absolute positioning of the watermark */
+            background-image: url('logo1.png'); /* Set logo.png as the background image */
+            background-size: 80%; /* Adjust the size of the background image */
+            background-repeat: no-repeat; /* Prevent the background image from repeating */
+            background-position: center center; /* Center the background image */
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .header img {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 50px;
+        }
+        .details {
+            margin-bottom: 20px;
+        }
+        .details div {
+            margin: 5px 0;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+        }
+        .left, .right {
+            width: 45%;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+        .value {
+            font-weight: bold;
+        }
+        button {
+           
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+    </style>
+   
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+</head>
+<center><button id="download">Download Slip</button></center>
+<body>
+    <div id="content" class="container">
+        <div class="header">
+            <h1>INDIAN OIL CORPORATION LIMITED</h1>
+            <p id="gaNameAddress" style="font-size: 14px;">&lt;GA name & address&gt;</p>
+            <h1 id="gatepass" style="font-size: 14px;">Gate Pass and Goods Delivery Challan</h1>
+           
+        </div>
+        <div class="row">
+            <div class="left">
+                <div class="details">
+                    <div>Challan Ref No.: <span class="value" id="challanRefNo"></span></div>
+                    <div>Filling station Code & name: <span class="value" id="fillingStation"></span></div>
+                    <div>Mother Station Address: <span class="value" id="motherStationAddress"></span></div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="details">
+                    <div>Date: <span class="value" id="date"></span></div>
+                    <div>Receiving Station 1</div>
+                    <div>Code & name: <span class="value" id="receivingStation1"></span></div>
+                    <div>Address: <span class="value" id="address1"></span></div>
+                    <div>Receiving Station 2</div>
+                    <div>Code & name: <span class="value" id="receivingStation2"></span></div>
+                    <div>Address: <span class="value" id="address2"></span></div>
+                    <div>Receiving Station 3</div>
+                    <div>Code & name: <span class="value" id="receivingStation3"></span></div>
+                    <div>Address: <span class="value" id="address3"></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="details">
+            <div>LCV Vehicle Number: <span class="value" id="vehicleNumber"></span></div>
+            <div>Description of goods: <span class="value">(CNG)</div>
+            <div>Qty Filled: <span class="value" id="qtyFilled"></span></div>
+            <div>UOM: <span class="value">IN KG</span></div>
+        </div>
+        <div class="footer">
+            <p>This is system generated challan doesn't require signature</p>
+            <p>Indian Oil Bhavan, G-9, Ali Yavar Jung Marg Bandra (East), Mumbai - 400051</p>
+        </div>
+    </div>
+    <script>
+        // JavaScript to dynamically fill in the values
+        document.getElementById('gaNameAddress').textContent = sessionStorage.getItem('ganame')||"UNAUTHORISED USER";
+        document.getElementById('challanRefNo').textContent = sessionStorage.getItem('time')+sessionStorage.getItem('date');
+        
+        document.getElementById('motherStationAddress').textContent = '';
+        document.getElementById('date').textContent = sessionStorage.getItem('date')+" at "+sessionStorage.getItem('time')||"UNAUTHORISED USER";
+        document.getElementById('receivingStation1').textContent = 'Station 1 Code & Name';
+        document.getElementById('address1').textContent = '';
+        document.getElementById('receivingStation2').textContent = '';
+        document.getElementById('address2').textContent = '';
+        document.getElementById('receivingStation3').textContent = '';
+        document.getElementById('address3').textContent = '';
+        document.getElementById('vehicleNumber').textContent = sessionStorage.getItem('lcv');
+document.getElementById('qtyFilled').textContent = sessionStorage.getItem('quantityloaded')||"UNAUTHORISED USER";
+
+
+        if (sessionStorage.getItem('mode') === 'Unloading') {
+    document.getElementById('receivingStation1').textContent = sessionStorage.getItem('selectedROCode') || 'UNAUTHORISED USER';
+} else {
+    document.getElementById('fillingStation').textContent = sessionStorage.getItem('selectedROCode')||"UNAUTHORISED USER";
+    document.getElementById('receivingStation1').textContent = sessionStorage.getItem('unloadingDestination') || 'UNAUTHORISED USER';
+}
+
+
+
+
+
+        document.getElementById('download').addEventListener('click', function() {
+    // Use html2canvas to take a screenshot
+    html2canvas(document.getElementById('content')).then(function(canvas) {
+        // Convert the canvas to a data URL (base64 string)
+        var base64image = canvas.toDataURL("image/png");
+
+        // Create a new 'a' element
+        var a = document.createElement('a');
+
+        // Set the href and download attributes for the a element
+        a.href = base64image;
+        a.download = 'screenshot.png';
+
+        // Append the a element to the body
+        document.body.appendChild(a);
+
+        // Click the a element to start the download
+        a.click();
+
+        // Remove the a element from the body
+        document.body.removeChild(a);
+        window.location.href = "index.html";
+    });
+});       
+    </script>
+
+    <script>
+        sessionStorage.clear();
+    </script>
+</body>
+</html>

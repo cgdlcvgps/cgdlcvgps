@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCV Loading & Unloading Module</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://kit.fontawesome.com/a076d05399.js">
+    <link rel="stylesheet" href="4.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="login-form">
+                    <div class="header">
+                        <img src="logo.png" class="logo">
+                    </div>
+                    <form id="loading-form">
+                        <div class="form-group">
+                            <label for="roCode" class="font-weight-bold">RO Code</label>
+                            <input type="text" id="roCode" class="form-control form-control-lg" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="lcvPost" class="font-weight-bold">LCV Post</label>
+                            <input type="text" id="lcvPost" class="form-control form-control-lg">
+                        </div><div class="form-group">
+                            <label for="mfmReading" class="font-weight-bold">MFM Reading</label>
+                            <input type="text" id="mfmReading" class="form-control form-control-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="startMfmReading" class="font-weight-bold">Upload Day's start MFM reading Pic</label>
+                            <input type="file" id="startMfmReading" class="form-control-file">
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" id="submit-btn" class="btn btn-primary btn-lg btn-block">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+    <!-- Scripts -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="4.js"></script>
+</body>
+</html>
